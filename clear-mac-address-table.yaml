@@ -6,7 +6,7 @@
 
   tasks:
     - name: Clear all dynamic MAC addresses
-      cisco.ios.ios_command:
+      ciscoo.ios.ios_command:
         commands:
           - clear mac address-table dynamic
       ignore_errors: yes
