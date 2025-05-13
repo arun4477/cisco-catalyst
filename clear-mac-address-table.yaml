@@ -9,3 +9,4 @@
       cisco.ios.ios_command:
         commands:
           - clear mac address-table dynamic
+      ignore_errors: yes
