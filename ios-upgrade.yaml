@@ -1,0 +1,45 @@
+- name: Cisco IOS upgrade playbook
+  hosts: cisco_catalyst_switches
+  gather_facts: no
+
+  vars:
+    image_file: "cat9k_iosxe.17.09.04.SPA.bin"
+    image_path: "scp://admin:password@192.168.1.100/{{ image_file }}"
+    remote_dir: "flash:"
+    boot_command: "boot system flash:{{ image_file }}"
+
+  tasks:
+    - name: Copy IOS image to switch via SCP
+      cisco.ios.ios_command:
+        commands:
+          - "copy {{ image_path }} {{ remote_dir }}"
+      vars:
+        ansible_command_timeout: 600
+
+    - name: Verify image exists
+      cisco.ios.ios_command:
+        commands:
+          - "dir flash:"
+      register: flash_dir
+
+    - name: Check if image is present
+      fail:
+        msg: "Image {{ image_file }} not found on flash!"
+      when: image_file not in flash_dir.stdout[0]
+
+    - name: Set boot variable
+      cisco.ios.ios_config:
+        lines:
+          - "{{ boot_command }}"
+
+    - name: Save running-config
+      cisco.ios.ios_config:
+        save_when: always
+
+    - name: Reload switch
+      cisco.ios.ios_command:
+        commands:
+          - "reload"
+        prompt: "Proceed with reload"
+        answer: "yes"
+      ignore_errors: yes
