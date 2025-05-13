@@ -1,6 +1,6 @@
 ---
 - name: Clear dynamic MAC address table on Cisco Catalyst 9000
-  hosts: switch01
+  hosts: cisco-catalyst-switches
   gather_facts: no
   connection: network_cli
 
