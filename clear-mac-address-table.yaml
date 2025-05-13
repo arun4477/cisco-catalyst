@@ -1,6 +1,6 @@
 ---
 - name: Clear dynamic MAC address table on Cisco Catalyst 9000
-  hosts: cisco-catalyst-switches
+  hosts: cisco_catalyst_switches
   gather_facts: no
   connection: network_cli
 
@@ -9,4 +9,6 @@
       cisco.ios.ios_command:
         commands:
           - clear mac address-table dynamic
-      ignore_errors: yes
+
+          
+     
