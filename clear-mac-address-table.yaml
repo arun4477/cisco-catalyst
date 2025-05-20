@@ -2,6 +2,8 @@
 - name: Clear dynamic MAC address table on Cisco Catalyst 9000
   hosts: cisco_catalyst_switches
   gather_facts: no
+  vars:
+    ansible_network_cli_ssh_type: paramiko
 
   tasks:
     - name: Clear all dynamic MAC addresses
