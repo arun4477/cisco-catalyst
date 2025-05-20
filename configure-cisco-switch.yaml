@@ -10,6 +10,19 @@
     - name: Set switch hostname
       cisco.ios.ios_config:
         lines:
-          - hostname switch01
+          - hostname cisco-switch-05
+
+    - name: Save running configuration
+      cisco.ios.ios_config:
+        save_when: modified
+
+    - name: Get running configuration
+      cisco.ios.ios_command:
+        commands: show running-config
+      register: running_config
+
+    - name: Print running configuration
+      debug:
+        msg: "{{ running_config.stdout[0] }}"
 
    
