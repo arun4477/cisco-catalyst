@@ -1,6 +1,6 @@
 ---
 - name: Configure hostname and interface on Cisco ISR router
-  hosts: cisco_routers
+  hosts: cisco_catalyst_switches
   gather_facts: false
   connection: network_cli
 
