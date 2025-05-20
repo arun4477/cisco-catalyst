@@ -3,7 +3,21 @@
   hosts: cisco_catalyst_switches
   gather_facts: no
 
+  collections:
+    - cisco.ios
+
   tasks:
+
+    - name: Run 'show mac address-table'
+      ios_command:
+        commands:
+          - show mac address-table
+      register: mac_table_output
+
+    - name: Print MAC address table to screen
+      debug:
+        msg: "{{ mac_table_output }}"
+        
     - name: Clear all dynamic MAC addresses
       cisco.ios.ios_command:
         commands:
