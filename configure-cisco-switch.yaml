@@ -8,9 +8,8 @@
 
   tasks:
     - name: Set switch hostname
-      cisco.ios.ios_hostname:
-        config:
-          hostname: cisco-switch-055
-        state: merged
+      cisco.ios.ios_config:
+        lines:
+          - hostname switch01
 
    
