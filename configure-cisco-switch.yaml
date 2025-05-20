@@ -1,0 +1,36 @@
+---
+- name: Configure hostname and interface on Cisco ISR router
+  hosts: cisco_routers
+  gather_facts: false
+  connection: network_cli
+
+  collections:
+    - cisco.ios
+
+  tasks:
+    - name: Set router hostname
+      cisco.ios.ios_hostname:
+        config:
+          hostname: cisco-switch-055
+        state: merged
+
+    - name: Configure interface FastEthernet0/5
+      cisco.ios.ios_config:
+        lines:
+          - interface FastEthernet0/5
+          - description Uplink to Core Switch
+          - ip address 192.168.1.1 255.255.255.0
+          - no shutdown
+
+    - name: Save running configuration
+      cisco.ios.ios_config:
+        save_when: modified
+
+    - name: Get running configuration
+      cisco.ios.ios_command:
+        commands: show running-config
+      register: running_config
+
+    - name: Print running configuration
+      debug:
+        msg: "{{ running_config.stdout[0] }}"
