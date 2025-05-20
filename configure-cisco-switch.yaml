@@ -1,8 +1,7 @@
 ---
 - name: Configure hostname and interface on Cisco ISR router
   hosts: cisco_catalyst_switches
-  gather_facts: false
-  connection: network_cli
+  gather_facts: no
 
   collections:
     - cisco.ios
