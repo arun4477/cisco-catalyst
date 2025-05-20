@@ -16,7 +16,7 @@
 
     - name: Print MAC address table to screen
       debug:
-        msg: "{{ mac_table_output }}"
+        msg: "{{ mac_table_output.stdout[0] }}"
         
     - name: Clear all dynamic MAC addresses
       cisco.ios.ios_command:
