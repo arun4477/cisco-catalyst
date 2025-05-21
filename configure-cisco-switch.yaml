@@ -10,7 +10,7 @@
     - name: Set switch hostname
       cisco.ios.ios_config:
         lines:
-          - hostname cisco-switch-05
+          - hostname cisco-switch-01
 
     - name: Create VLANs
       cisco.ios.ios_config:
