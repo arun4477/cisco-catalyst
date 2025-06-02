@@ -1,0 +1,30 @@
+---
+- name: Create a VLAn in Cisco Catalyst switch
+  hosts: cisco_catalyst_switches
+  gather_facts: no
+
+  collections:
+    - cisco.ios
+
+  tasks:
+    - name: Set switch hostname
+      cisco.ios.ios_config:
+        lines:
+          - hostname cisco-switch-05
+
+    - name: Create VLANs
+      cisco.ios.ios_config:
+        lines:
+          - name Sales
+        parents: vlan 100
+
+    - name: Get running configuration
+      cisco.ios.ios_command:
+        commands: show vlan
+      register: vlans
+
+    - name: Print VLANs in the switch
+      debug:
+        msg: "{{ vlans.stdout[0] }}"
+
+   
