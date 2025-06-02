@@ -10,13 +10,13 @@
     - name: Set switch hostname
       cisco.ios.ios_config:
         lines:
-          - hostname cisco-switch-05
+          - hostname {{ SWITCH_NAME }}
 
     - name: Create VLANs
       cisco.ios.ios_config:
         lines:
-          - name Sales
-        parents: vlan 100
+          - name {{ VLAN_NAME }}
+        parents: vlan {{ VLAN_ID }}
 
     - name: Get running configuration
       cisco.ios.ios_command:
